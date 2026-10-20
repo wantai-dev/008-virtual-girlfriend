@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "project": "wantai-dev/008-virtual-girlfriend",
+  "runner": "ubuntu-latest",
+  "install": [
+    {
+      "command": [
+        "npm",
+        "install",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cwd": "."
+    }
+  ],
+  "checks": [
+    {
+      "id": "eslint",
+      "paths": [
+        "src/**",
+        "app/**",
+        "components/**",
+        "lib/**",
+        "*.js",
+        "*.mjs",
+        "*.ts",
+        "*.tsx",
+        "package.json",
+        "eslint.config.*"
+      ],
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "cwd": "."
+    },
+    {
+      "id": "typescript",
+      "paths": [
+        "src/**",
+        "app/**",
+        "components/**",
+        "lib/**",
+        "*.ts",
+        "*.tsx",
+        "tsconfig.json",
+        "package.json"
+      ],
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "cwd": "."
+    }
+  ],
+  "notes": [
+    "命令来源：package.json lint与已声明TypeScript；直接调用本地tsc做不生成产物的静态检查。",
+    "当前远端tree无依赖锁文件，npm install不能保证可复现；后续应单独审核并建立锁文件。",
+    "根目录test-*.js未证实为隔离离线测试，不执行；不运行真实LLM、Supabase、唤醒、登录或资料写入。未纳入Next构建和功能端到端回归。"
+  ]
+}
